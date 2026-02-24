@@ -55,9 +55,50 @@ Aplikasi ini memisahkan logika bisnis dari UI dengan menggunakan pola ChangeNoti
 
 ## Output
 
-<img width="1919" height="970" alt="image" src="https://github.com/user-attachments/assets/509545c2-92c7-472b-9bbd-1d9f20c2526e" />
+<img width="1919" height="285" alt="image" src="https://github.com/user-attachments/assets/e773ac4d-fc7e-49d0-ba94-c6c78fdb9768" />
 
-Halaman ini menampilkan daftar produk dalam bentuk grid dua kolom dengan nama, harga, dan tombol tambah ke keranjang. Di bagian atas terdapat fitur pencarian dan filter kategori untuk menyaring produk. Ikon keranjang di AppBar menunjukkan jumlah item yang ditambahkan. Semua perubahan data terhubung dengan Provider sehingga jumlah dan isi keranjang otomatis ter-update.
+Fitur Search digunakan untuk mencari produk berdasarkan nama dengan cara mengetik kata kunci pada kolom pencarian, sehingga daftar produk akan otomatis tersaring sesuai input pengguna. Filter kategori (All, Electronics, Accessories) berfungsi untuk menampilkan produk berdasarkan kategori tertentu agar pengguna lebih mudah menemukan jenis barang yang diinginkan. Sedangkan ikon keranjang (Cart) di pojok kanan atas menampilkan jumlah item yang telah ditambahkan melalui badge angka, dan ketika ditekan akan mengarahkan pengguna ke halaman Shopping Cart untuk melihat, mengubah jumlah, atau menghapus produk yang dipilih.
+
+<img width="1919" height="970" alt="image" src="https://github.com/user-attachments/assets/b8cfa47e-8fef-4782-bd62-0fd9ab5cdbcd" />
+
+Gambar tersebut menampilkan halaman Shopping Cart dalam kondisi kosong pada aplikasi Flutter. Di bagian atas terdapat AppBar dengan judul “Shopping Cart” dan tombol kembali. Pada bagian tengah layar terdapat ikon keranjang berwarna abu-abu yang menunjukkan bahwa belum ada produk yang ditambahkan. Di bawahnya terdapat teks “Your cart is empty” serta tombol “Continue Shopping” yang berfungsi untuk kembali ke halaman daftar produk. Tampilan ini muncul ketika cart.isEmpty bernilai true dan dirender menggunakan Consumer<CartModel> sehingga UI akan berubah otomatis jika ada item yang ditambahkan ke keranjang.
+
+<img width="1919" height="971" alt="image" src="https://github.com/user-attachments/assets/167114f2-f41b-4035-bfae-5855eb9c5ca8" />
+
+Tombol “Add” berfungsi untuk menambahkan produk ke dalam keranjang belanja menggunakan state management Provider. Saat tombol ditekan, fungsi context.read<CartModel>().addItem(product) akan dipanggil untuk menyimpan produk ke dalam CartModel, lalu notifyListeners() memperbarui tampilan secara otomatis seperti badge jumlah item di ikon keranjang dan isi halaman Cart. Jika tombol ditekan lagi pada produk yang sama, maka quantity akan bertambah tanpa perlu memuat ulang halaman.
+
+<img width="1919" height="969" alt="image" src="https://github.com/user-attachments/assets/ba2db60e-37aa-4f1f-8d66-ba1a90e5d0c0" />
+
+Halaman Shopping Cart ini menampilkan daftar produk yang sudah ditambahkan ke keranjang, lengkap dengan nama produk, harga satuan, serta kontrol jumlah berupa tombol (+/-) untuk menambah atau mengurangi kuantitas secara langsung. Di sisi kanan setiap item terdapat ikon hapus (delete) untuk menghapus produk dari keranjang, dan subtotal harga per item ditampilkan sesuai jumlah yang dipilih. Pada bagian bawah terdapat ringkasan Total harga keseluruhan yang otomatis ter-update menggunakan Provider setiap kali jumlah berubah, serta tombol Checkout untuk melanjutkan ke proses pemesanan.
+
+<img width="265" height="190" alt="image" src="https://github.com/user-attachments/assets/d9e97e0e-1918-4c65-804c-2e525e0a0519" />
+
+Popup Checkout ini menampilkan ringkasan akhir sebelum pesanan diproses, yaitu total harga keseluruhan dan jumlah item yang ada di keranjang. Tombol Cancel digunakan untuk membatalkan proses dan kembali ke halaman keranjang, sedangkan tombol Confirm akan menyelesaikan transaksi (biasanya dengan mengosongkan keranjang dan menampilkan notifikasi berhasil). Dialog ini berfungsi sebagai tahap konfirmasi agar pengguna memastikan kembali pesanannya sebelum checkout.
+
+<img width="1919" height="400" alt="image" src="https://github.com/user-attachments/assets/0eac7726-857a-46ca-bd16-598c8d014e07" />
+
+Tampilan “Order placed!” merupakan notifikasi (SnackBar) yang muncul setelah pengguna menekan tombol Confirm pada halaman checkout. Pesan ini menandakan bahwa proses pemesanan berhasil dilakukan, keranjang telah dikosongkan, dan transaksi dianggap selesai. Notifikasi ini muncul sementara sebagai feedback kepada pengguna bahwa pesanan telah diproses dengan sukses.
+
+## 📝 Implementasi Fitur & Penilaian
+### ✅ WAJIB (70 Points)
+### ✔ Add to Cart dari Product List
+Setiap produk memiliki tombol Add yang terhubung dengan CartModel menggunakan context.read<CartModel>(). Saat ditekan, produk langsung ditambahkan ke keranjang dan badge pada ikon cart otomatis ter-update.
+### ✔ Menampilkan Item di Keranjang dengan Quantity
+Halaman CartPage menampilkan daftar produk yang sudah ditambahkan lengkap dengan jumlah (quantity) masing-masing item.
+### ✔ Update Quantity (+ / -)
+Pengguna dapat menambah atau mengurangi jumlah produk menggunakan tombol increment (+) dan decrement (-). Perubahan langsung memperbarui total harga menggunakan notifyListeners().
+### ✔ Remove Item dari Cart
+Setiap item memiliki tombol delete untuk menghapus produk tertentu dari keranjang.
+### ✔ Menampilkan Total Harga Secara Real-time
+Total harga dihitung otomatis dari seluruh item di dalam cart dan diperbarui secara langsung menggunakan Consumer<CartModel>.
+
+## ⭐ BONUS (30 Points)
+### 🔎 Search Produk (+10)
+Tersedia kolom pencarian untuk memfilter produk berdasarkan nama.
+### 🗂 Filter Kategori (+10)
+Dropdown kategori memungkinkan pengguna memfilter produk berdasarkan kategori (All, Electronics, Accessories).
+### 🧾 Checkout Page (+10)
+Tersedia halaman/dialog checkout yang menampilkan ringkasan total harga dan jumlah item sebelum konfirmasi pesanan. Setelah konfirmasi, cart akan dikosongkan dan muncul notifikasi “Order placed!”.
 
 ## 🎓 Akademik
 ### Mata Kuliah: Pemrograman Mobile
