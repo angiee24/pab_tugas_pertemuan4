@@ -101,7 +101,7 @@ Dropdown kategori memungkinkan pengguna memfilter produk berdasarkan kategori (A
 Tersedia halaman/dialog checkout yang menampilkan ringkasan total harga dan jumlah item sebelum konfirmasi pesanan. Setelah konfirmasi, cart akan dikosongkan dan muncul notifikasi “Order placed!”.
 
 ## 🎓 Akademik
-### Mata Kuliah: Pemrograman Mobile
+### Mata Kuliah: Pemrograman Aplikasi Bergerak
 ### Program Studi: Sistem Informasi - Universitas Mulawarman
 
 
